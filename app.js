@@ -6,12 +6,19 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
+// socketio
 
 const Router = require('koa-router');
 const fs = require('fs');
 const server = require('http').createServer(app.callback());
 const io = require('socket.io')(server);
 
+// mongoose
+
+const mongoose = require('mongoose');
+const dbCOnfig = require('./app/dbs/config')
+
+// 路由的引入
 const login = require('./app/controllers/login')
 
 
@@ -40,12 +47,19 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-// app.use(index.routes(), index.allowedMethods())
-// app.use(users.routes(), users.allowedMethods())
-
-// app.use(login.routes(), login.allowedMethods())
-
 app.use(login.routes(), login.allowedMethods());
+
+// 连接数据库
+mongoose.connect(dbCOnfig.dbs, 
+	{useNewUrlParser: true, useUnifiedTopology: true}, 
+	function(err) {
+		if (err) {
+			console.log('Connection Error' + err);
+		} else {
+			console.log('Connection success');
+		}
+	}
+)
 
 
 // error-handling
