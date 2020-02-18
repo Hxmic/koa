@@ -12,33 +12,7 @@ const fs = require('fs');
 const server = require('http').createServer(app.callback());
 const io = require('socket.io')(server);
 
-
-// 首页路由
-let router = new Router();
-router.get('/home', ctx => {
-  ctx.response.type = 'html';
-  ctx.response.body = fs.createReadStream('./index.html');
-});
-
-// socket连接
-io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-      console.log('message: '+msg);
-      io.emit('chat message', msg);
-    });
-    socket.on('disconnect', () => {
-      console.log('user disconnected');
-    });
-  });
-
-app.use(router.routes());
-
-// const index = require('./routes/index')
-// const users = require('./routes/users')
-// const login = require('./routes/login')
-
 const login = require('./app/controllers/login')
-const test = require('./app/controllers/test')
 
 
 // error handler
@@ -72,7 +46,6 @@ app.use(async (ctx, next) => {
 // app.use(login.routes(), login.allowedMethods())
 
 app.use(login.routes(), login.allowedMethods());
-app.use(test.routes(), test.allowedMethods())
 
 
 // error-handling
@@ -80,4 +53,4 @@ app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
 
-module.exports = app
+module.exports = app;
