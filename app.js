@@ -19,7 +19,8 @@ const mongoose = require('mongoose');
 const dbCOnfig = require('./app/dbs/config')
 
 // 路由的引入
-const login = require('./app/controllers/login')
+const login = require('./app/controllers/login');
+const users = require('./app/controllers/user');
 
 
 // error handler
@@ -39,15 +40,16 @@ app.use(views(__dirname + '/views', {
 
 // logger
 app.use(async (ctx, next) => {
-  ctx.set('Content-Type','application/x-www-form-urlencoded')
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+	ctx.set('Content-Type','application/x-www-form-urlencoded')
+	const start = new Date()
+	await next()
+	const ms = new Date() - start
+	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
 // routes
 app.use(login.routes(), login.allowedMethods());
+app.use(users.routes(), users.allowedMethods());
 
 // 连接数据库
 mongoose.connect(dbCOnfig.dbs, 
