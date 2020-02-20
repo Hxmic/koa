@@ -12,6 +12,7 @@
     "debug": "^4.1.1",
     "fs": "^0.0.1-security",
     "http": "^0.0.0",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
     "koa-convert": "^1.2.0",
@@ -24,7 +25,8 @@
     "mongodb": "^3.5.3",
     "mongoose": "^5.9.1",
     "pug": "^2.0.3",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
